@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Risk Recommendations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Garamond&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #6A4F39; /* Walnut Brown */
+            font-family: 'Baskerville', serif;
+            color: #D1C6B1; /* Light Beige */
+            padding: 40px;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Libre Baskerville', serif; /* Elegant font */
+            font-size: 3.5em;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: normal;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Soft glow effect */
+        }
+        .recommendations {
+            margin-top: 30px;
+            font-size: 1.25em; /* Reduced font size */
+            color: #F5C0A1; /* Lighter peach for the recommendations */
+            line-height: 1.8;
+            font-weight: normal; /* Reduced boldness */
+        }
+        .recommendations h2 {
+            color: #D1C6B1;
+            font-size: 1.5em;
+            text-align: center;
+        }
+        .recommendations ul {
+            text-align: left;
+            margin-left: 40px;
+            list-style-type: disc;
+        }
+        .extra-message {
+            font-size: 1.1em; /* Slightly smaller font size */
+            color: #F8D1E0; /* Even lighter pink color for extra message */
+            margin-top: 40px;
+        }
+
+        .emergency-info {
+            margin-top: 40px;
+            font-size: 1.2em;
+            color: #F5C0A1;
+            text-align: center;
+            font-weight: normal;
+        }
+
+        .important-message {
+            font-size: 1.6em; /* Slightly larger font for the important message */
+            font-weight: bold;
+        }
+
+        .lighter-pink {
+            color: #f3d6db; /* Lighter pink color */
+        }
+
+        .thank-you-note {
+            display: none;
+            background-color: #F5C0A1;
+            color: #6A4F39;
+            font-size: 1.1em;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 40px;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #B57C4A;
+            color: white;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 30px;
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.6); /* Glowing effect around the button */
+        }
+
+        button:hover {
+            background-color: #9A6434;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 165, 0, 1); /* Stronger glow effect when hovered */
+        }
+
+        button .heart {
+            color: #FFFFFF; /* White heart color */
+            font-size: 1.3em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Here’s a closer look at your heart health and tips to stay at your best!</h1>
+
+    <div class="recommendations">
+        <h2>Here's What You Can Do:</h2>
+        {% if prediction_percentage < 50 %}
+        <p>You're doing great! Keep it up and stay healthy. Here are a few tips to keep your heart in top shape:</p>
+        <ul>
+            <li><strong>Keep moving:</strong> Regular exercise helps keep your heart strong. Aim for at least 150 minutes of moderate-intensity activity per week.</li>
+            <li><strong>Watch what you eat:</strong> Focus on a balanced diet rich in fruits, veggies, whole grains, and healthy fats. Limit processed foods and sugar.</li>
+            <li><strong>Manage stress:</strong> Yoga, meditation, and deep-breathing exercises can reduce stress and lower your heart disease risk.</li>
+            <li><strong>Stay on top of your health:</strong> Regular check-ups and monitoring blood pressure and cholesterol can help detect any issues early.</li>
+            <li><strong>Sleep Well:</strong> Prioritize 7-9 hours of quality sleep to ensure your body and heart function optimally.</li>
+        </ul>
+        {% elif prediction_percentage < 70 %}
+        <p class="important-message">Your heart health is something to watch closely. Consider taking proactive steps to reduce risks:</p>
+        <ul>
+            <li><strong>Get moving:</strong> Make exercise part of your routine. Start slow, but aim for consistent physical activity like walking, swimming, or cycling.</li>
+            <li><strong>Quit smoking:</strong> If you're smoking, stop now. Smoking is a leading cause of heart disease, and quitting will dramatically improve your health.</li>
+            <li><strong>Watch your cholesterol:</strong> Keep an eye on your cholesterol levels. Eating heart-healthy fats like those found in avocado, olive oil, and nuts can help.</li>
+            <li><strong>Consider a health coach:</strong> If you're unsure how to get started, a health coach or personal trainer can guide you through lifestyle changes.</li>
+            <li><strong>Hydrate well:</strong> Drinking enough water throughout the day can improve circulation and overall health.</li>
+        </ul>
+        {% else %}
+        <p>Your risk is higher than it should be. It's time to take immediate action for your heart health:</p>
+        <ul>
+            <li><strong>See a doctor:</strong> Book an appointment with a healthcare professional to discuss your risk factors and get personalized guidance.</li>
+            <li><strong>Improve your diet:</strong> Work on cutting back on high-sodium foods and processed meats. Opt for whole foods and plant-based meals.</li>
+            <li><strong>Increase physical activity:</strong> Aim for 30 minutes of heart-healthy activities like brisk walking, running, or cycling at least 5 days a week.</li>
+            <li><strong>Track your progress:</strong> Keep track of your health metrics like blood pressure, cholesterol, and weight. Monitor improvements and adjust your actions.</li>
+            <li><strong>Quit alcohol:</strong> Reducing alcohol consumption can reduce your risk. Consider limiting intake to keep your heart healthy.</li>
+        </ul>
+        {% endif %}
+    </div>
+
+    <div class="extra-message lighter-pink">
+        Let's keep moving and prioritize your health!
+    </div>
+
+    <!-- Emergency Info Section -->
+    <div class="emergency-info">
+        Emergency info: <br>
+        Ambulance: 108 | Heart Disease Helpline: 104 | AIIMS Cardiac Care: 011-26588500 | National Heart Institute: 011-41750100 | Heart Foundation of India: 011-41689777
+    </div>
+
+    <!-- Button for Special Message with White Heart Icon -->
+    <button onclick="toggleMessage()">Click for Special Message <span class="heart">🤍</span></button>
+
+    <!-- Hidden Thank You Note -->
+    <div class="thank-you-note" id="thankYouNote">
+        <p>Thank you for taking the time to prioritize your heart health. Every small change you make can lead to a healthier and happier future. Keep up the good work and continue making positive choices for your heart. Your dedication is inspiring, and we are proud to support you on this journey.</p>
+        <p>Your commitment to better health will pay off in the long run. Stay consistent, stay positive, and remember that every step counts towards achieving your goals.</p>
+        <p>It’s not just about heart health; it’s about overall well-being. Prioritize yourself, your health, and your future. You deserve the best.</p>
+        <p>Thank you for using our heart health tool. Keep going, and know that we're here cheering you on. Together, we can make lasting changes!</p>
+        <p>Stay active, stay healthy, and most importantly—stay happy!</p>
+        <p>We’re grateful to be part of your journey and excited to see you continue making strides toward a healthier heart!</p>
+        <p>We believe in you!</p>
+    </div>
+
+    <script>
+        function toggleMessage() {
+            var message = document.getElementById("thankYouNote");
+            if (message.style.display === "none" || message.style.display === "") {
+                message.style.display = "block";
+            } else {
+                message.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

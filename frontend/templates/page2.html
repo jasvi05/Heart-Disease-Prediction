@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction - Step 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Garamond&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #6A4F39; /* Walnut Brown */
+            font-family: 'Baskerville', serif;
+            color: #D1C6B1; /* Light Beige */
+            padding: 40px;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Libre Baskerville', serif; /* Elegant font */
+            font-size: 3.5em;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: normal;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Soft glow effect */
+        }
+        .message {
+            font-size: 1.25em; /* Slightly reduced font size for message */
+            color: #F5C0A1; /* Lighter peach for the message */
+            margin-bottom: 40px;
+            font-family: 'Baskerville', serif; /* Baskerville font for message */
+            font-weight: normal; /* Reduced boldness */
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            font-size: 1.3em; /* Slightly bigger font size for the labels */
+            color: #D1C6B1;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        input[type="number"], input[type="text"], input[type="float"] {
+            padding: 12px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 20px;
+            width: 60%; /* Reduced width */
+            background-color: #C6A77D; /* Slightly darker brown */
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            box-shadow: 0 0 8px rgba(255, 165, 0, 0.5); /* Soft glowing effect */
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        input[type="number"]:focus, input[type="text"]:focus, input[type="float"]:focus {
+            box-shadow: 0 0 15px rgba(255, 165, 0, 0.7); /* Stronger glow on focus */
+        }
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .form-row .form-group {
+            flex: 1;
+            min-width: 45%;
+        }
+        button {
+            padding: 12px 30px;
+            background-color: #B57C4A; /* Medium Orangish-Brown */
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); /* Glowing effect around the button */
+        }
+        button:hover {
+            background-color: #9A6434;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 165, 0, 0.7); /* Stronger glow on hover */
+        }
+        .btn-center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: auto;
+        }
+        .prediction-result {
+            margin-top: 40px;
+            font-size: 1.15em; /* Slightly reduced font size for prediction text */
+            color: #D1C6B1;
+            font-weight: normal; /* Removed boldness */
+        }
+        .prediction-result h2 {
+            color: #F5C0A1; /* Lighter peach color for prediction percentage */
+            font-size: 1.3em; /* Reduced font size for prediction percentage */
+            font-family: 'Garamond', serif; /* Garamond font for prediction */
+            font-weight: normal; /* Removed boldness */
+        }
+        .btn-right {
+            padding: 8px 16px; /* Smaller size */
+            background-color: #8C572E;
+            color: white;
+            font-size: 1em;
+            border-radius: 30px;
+            text-align: center;
+            cursor: pointer;
+            display: inline-flex; /* Align the heart icon and text */
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-top: 20px;
+            right: 0;
+            box-shadow: 0 0 8px rgba(255, 165, 0, 0.5); /* Glow effect around the button */
+        }
+        .btn-right:hover {
+            background-color: #C07C34;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 165, 0, 0.7); /* Stronger glow on hover */
+        }
+        .heart-icon {
+            margin-left: 8px; /* Space between the button text and the heart icon */
+            font-size: 1.3em; /* Heart icon size */
+        }
+        .extra-message {
+            font-size: 1.1em; /* Slightly smaller font size for the message */
+            color: #F1B6C4; /* Soft light pink color for extra message */
+            margin-top: 20px;
+            font-weight: normal; /* Removed boldness */
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ name }}, Let's take the first step towards a Healthier Heart :)</h1>
+    <p class="message" style="font-size: 1.35em;">Please enter additional health information:</p> <!-- Slightly increased font size for message -->
+
+    <form action="/predict" method="POST">
+        <input type="hidden" name="name" value="{{ name }}">
+        <input type="hidden" name="age" value="{{ age }}">
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="sex">Sex (Male = 1, Female = 0):</label>
+                <input type="number" name="sex" id="sex" value="{{ sex or '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="cholesterol">Cholesterol (mg/dL):</label>
+                <input type="number" name="cholesterol" id="cholesterol" value="{{ cholesterol or '' }}" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="blood_pressure">Blood Pressure (mm Hg):</label>
+                <input type="number" name="blood_pressure" id="blood_pressure" value="{{ blood_pressure or '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="cp">Chest Pain Type (0-3):</label>
+                <input type="number" name="cp" id="cp" value="{{ cp or '' }}" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="trestbps">Resting Blood Pressure (mm Hg):</label>
+                <input type="number" name="trestbps" id="trestbps" value="{{ trestbps or '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="fbs">Fasting Blood Sugar (1 = true, 0 = false):</label>
+                <input type="number" name="fbs" id="fbs" value="{{ fbs or '' }}" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="restecg">Resting Electrocardiographic Result (0-2):</label>
+                <input type="number" name="restecg" id="restecg" value="{{ restecg or '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="thalach">Max Heart Rate Achieved:</label>
+                <input type="number" name="thalach" id="thalach" value="{{ thalach or '' }}" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="exang">Exercise Induced Angina (1 = yes, 0 = no):</label>
+                <input type="number" name="exang" id="exang" value="{{ exang or '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="oldpeak">Depression Induced by Exercise Relative to Rest:</label>
+                <input type="float" name="oldpeak" id="oldpeak" value="{{ oldpeak or '' }}" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="slope">Slope of Peak Exercise ST Segment (0-2):</label>
+                <input type="number" name="slope" id="slope" value="{{ slope or '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="ca">Number of Major Vessels Colored by Fluoroscopy:</label>
+                <input type="number" name="ca" id="ca" value="{{ ca or '' }}" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="thal">Thalassemia Type (0 = Fixed Defect, 1 = Reversible Defect, 2 = Unknown or Other Defect, 3 = Normal):</label>
+                <input type="number" name="thal" id="thal" value="{{ thal or '' }}" required style="width: 40%;"> <!-- Reduced width -->
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn-center">Predict</button>
+        </div>
+    </form>
+
+    {% if prediction_percentage %}
+        <div class="prediction-result">
+            <h2>Prediction: {{ prediction_percentage }}%</h2>
+
+            <!-- Message based on prediction percentage -->
+            <div class="extra-message">
+                {% if prediction_percentage < 50 %}
+                    <span style="color: #F5C0A1;">Good job! You're doing great! Let's check out some recommendations to keep up the good work.</span>
+                {% else %}
+                    <span style="color: #F5C0A1;">Looks like there's room for improvement! Let's check out some recommendations to take charge of your health.</span>
+                {% endif %}
+            </div>
+
+            <!-- Moved the button below the prediction -->
+            <button class="btn-right" onclick="window.location.href='/recommendations?prediction_percentage={{ prediction_percentage }}'">
+                Let's See Recommendations <span class="heart-icon">&hearts;</span>
+            </button>
+        </div>
+    {% endif %}
+</body>
+</html>
+
+
